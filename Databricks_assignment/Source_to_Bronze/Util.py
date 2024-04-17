@@ -5,7 +5,7 @@ from pyspark.sql.functions import current_date
 
 # COMMAND ----------
 
-# DBTITLE 1,Read the Files using Functions
+#  DBTITLE 1,Read the Files using Functions
 def read_csv_data(path):
     df=spark.read.csv(path,header=True)
     return df
