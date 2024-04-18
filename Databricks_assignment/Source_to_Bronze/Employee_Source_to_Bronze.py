@@ -25,16 +25,7 @@ write_csv_file(department_df,'dbfs:/FileStore/assignments/assignment1/source_to_
 write_csv_file(employee_df,'dbfs:/FileStore/assignments/assignment1/source_to_bronze/employee_df.csv')
 
 
-# COMMAND ----------
 
-# DBTITLE 1,Camel Case to Snake Case
-
-employee_df= change_column_case_to_snake_case(employee_df)
-employee_df.display()
-department_df=change_column_case_to_snake_case(department_df)
-department_df.display()
-country_df=change_column_case_to_snake_case(country_df)
-country_df.display()
 
 
 # COMMAND ----------
