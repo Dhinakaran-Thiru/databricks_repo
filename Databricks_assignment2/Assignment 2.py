@@ -64,7 +64,7 @@ df.printSchema()
 
 # COMMAND ----------
 
-df = df.withColumn("id", df.data.id).withColumn('email', df.data.email).withColumn('first_name', df.data.first_name).withColumn('last_name', df.data.last_name).withColumn('aatar', df.data.avatar).drop(df.data)
+df = df.withColumn("id", df.data.id).withColumn('email', df.data.email).withColumn('first_name', df.data.first_name).withColumn('last_name', df.data.last_name).withColumn('avatar', df.data.avatar).drop(df.data)
 display(df)
 
 
