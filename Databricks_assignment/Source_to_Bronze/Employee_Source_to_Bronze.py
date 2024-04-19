@@ -4,43 +4,32 @@
 # MAGIC
 
 # COMMAND ----------
+dbutils.widgets.text("data_type","","data_type")
+dbutils.widgets.text("table_name","","table_name")
+dbutils.widgets.text("database_name","","database_name")
+data_type = dbutils.widgets.get("data_type")
+data_type = dbutils.widgets.get("table_name")
+data_type = dbutils.widgets.get("database_name")
+
+# COMMAND -----------
+%run /Users/dhinakaran.t@diggibyte.com/Databricks_assignment/Source_to_Bronze/Util
 
 # DBTITLE 1,Reading All CSV Files
-employee_path = "dbfs:/FileStore/assignments/assignment1/resources/Employee_Q1.csv"
-department_path = "dbfs:/FileStore/assignments/assignment1/resources/Department_Q1.csv"
-country_path= "dbfs:/FileStore/assignments/assignment1/resources/Country_Q1.csv"
+source_path = f"dbfs:/FileStore/assignments/assignment1/resources/{data_type}.csv"
+bronze_path = f"dbfs:/FileStore/assignments/assignment1/source_to_bronze1/{data_type1}.csv"
+reading_csv_files=read_csv_data(source_path)
+reading_csv_files.display()
 
-country_df=read_csv_data(country_path)
-country_df.display()
-department_df=read_csv_data(department_path)
-department_df.display()
-employee_df=read_csv_data(employee_path)
-employee_df.display()
+
 
 # COMMAND ----------
 
 # DBTITLE 1,Writing all CSV Files
-write_csv_file(country_df,'dbfs:/FileStore/assignments/assignment1/source_to_bronze/country_df.csv')
-write_csv_file(department_df,'dbfs:/FileStore/assignments/assignment1/source_to_bronze/department_df.csv')
-write_csv_file(employee_df,'dbfs:/FileStore/assignments/assignment1/source_to_bronze/employee_df.csv')
+write_csv_file(reading_csv_files,bronze_path)
 
-
-# COMMAND ----------
-
-# DBTITLE 1,Camel Case to Snake Case
-
-employee_df= change_column_case_to_snake_case(employee_df)
-employee_df.display()
-department_df=change_column_case_to_snake_case(department_df)
-department_df.display()
-country_df=change_column_case_to_snake_case(country_df)
-country_df.display()
-
-
-# COMMAND ----------
-
-# DBTITLE 1,Spark SQL Commands to create Database
-spark.sql("CREATE DATABASE IF NOT EXISTS Employee_info")
+def overwrite_silver_path(database_name, table_name, df, silver_path):
+    
+    df.mode("overwrite").option("path",silver_path).saveAsTable(f'{database_name}.{table_name}')
 
 
 # COMMAND ----------
